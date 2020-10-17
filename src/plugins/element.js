@@ -4,7 +4,7 @@ import {
     Main, Container, Collapse,
     CollapseItem, Row, Col,
     Form,FormItem,Table,
-    TableColumn, Input, Message
+    TableColumn, Input, Autocomplete
 } from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css'
 
@@ -22,4 +22,4 @@ Vue.use(FormItem);
 Vue.use(Table);
 Vue.use(TableColumn);
 Vue.use(Input);
-Vue.use(Message);
+Vue.use(Autocomplete);

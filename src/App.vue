@@ -16,6 +16,8 @@ export default {
 <style lang="less">
 @import "assets/styles/style";
 #app {
-
+  .el-main{
+    overflow: inherit;
+  }
 }
 </style>
