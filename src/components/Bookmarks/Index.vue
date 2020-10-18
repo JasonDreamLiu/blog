@@ -153,7 +153,7 @@ export default {
         ]
       },
       bookmarkTitlesFormValidator: async (rule, value, callback) => {
-        await axios.get('http://192.168.1.2:3000/connect/selIsBookmarkTitle', {
+        await axios.get('http://118.25.150.243:8000/connect/selIsBookmarkTitle', {
           params: {
             title: value
           }
@@ -190,7 +190,7 @@ export default {
       });
     },
     getBookmarks: async function () {
-      await axios.get('http://192.168.1.2:3000/connect/aggregate')
+      await axios.get('http://118.25.150.243:8000/connect/aggregate')
           .then((res) => {
             console.log(res);
             this.bookmarks = res.data;
@@ -201,7 +201,7 @@ export default {
     },
     getBookmarkTitles: async function (queryString, cb) {
       console.log(queryString);
-      await axios.get('http://192.168.1.2:3000/connect/selBookmarkTitles', {
+      await axios.get('http://118.25.150.243:8000/connect/selBookmarkTitles', {
         params: {
           title: queryString
         }
@@ -241,7 +241,7 @@ export default {
       )
     },
     setBookmarkTitles: async function () {
-      await axios.post('http://192.168.1.2:3000/connect/addBookmarkTitles', this.bookmarkTitlesForm.titles)
+      await axios.post('http://118.25.150.243:8000/connect/addBookmarkTitles', this.bookmarkTitlesForm.titles)
           .then(res => {
             console.log(res);
             this.getBookmarks();
@@ -267,7 +267,7 @@ export default {
     },
     setBookmarks: async function () {
       this.addBookmarksLod = true;
-      await axios.post('http://192.168.1.2:3000/connect/addBookmarks', this.bookmarksForm.addBookmarks)
+      await axios.post('http://118.25.150.243:8000/connect/addBookmarks', this.bookmarksForm.addBookmarks)
           .then(res => {
             console.log(res);
             this.getBookmarks();
