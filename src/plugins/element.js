@@ -4,9 +4,14 @@ import {
     Main, Container, Collapse,
     CollapseItem, Row, Col,
     Form,FormItem,Table,
-    TableColumn, Input, Autocomplete
+    TableColumn, Input, Autocomplete,
+    Aside,Menu,MenuItem,MenuItemGroup,
+    Submenu,Tabs,TabPane
 } from 'element-ui';
-import 'element-ui/lib/theme-chalk/index.css'
+import 'element-ui/lib/theme-chalk/index.css';
+import 'element-ui/lib/theme-chalk/base.css';
+import CollapseTransition from 'element-ui/lib/transitions/collapse-transition';
+
 
 Vue.use(Button)
 Vue.use(Header);
@@ -23,3 +28,11 @@ Vue.use(Table);
 Vue.use(TableColumn);
 Vue.use(Input);
 Vue.use(Autocomplete);
+Vue.use(Aside);
+Vue.use(Menu);
+Vue.use(MenuItem);
+Vue.use(MenuItemGroup);
+Vue.use(Submenu);
+Vue.use(Tabs);
+Vue.use(TabPane);
+Vue.use(CollapseTransition.name,CollapseTransition);

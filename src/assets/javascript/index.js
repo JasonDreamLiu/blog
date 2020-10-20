@@ -19,7 +19,7 @@ export default function (id){
     var warea = {x: null, y: null, max: 20000};
     window.onmousemove = function (e) {
         e = e || window.event;
-        warea.x = e.clientX;
+        warea.x = e.clientX + 8;
         warea.y = e.clientY;
     };
     window.onmouseout = function () {
@@ -34,16 +34,16 @@ export default function (id){
         var y = warea.y;
         var xa = Math.random() * 3 - 1;
         var ya = Math.random() * 3 - 1;
-        dots.push({
+        dots[Math.round(Math.random() * dots.length-1)] = {
             x: x,
             y: y,
             xa: xa,
             ya: ya,
             max: 16000,
-            color: Math.random() * col.length-1
-        })
+            color: col[Math.round(Math.random() * col.length-1)]
+        }
     }
-    for (var i = 0; i < 150; i++) {
+    for (var i = 0; i < 75; i++) {
         var x = Math.random() * canvas.width;
         var y = Math.random() * canvas.height;
         var xa = Math.random() * 3 - 1;
@@ -279,3 +279,24 @@ export function CasBackground(id){
 //         requestAnimationFrame(draw);
 //     }
 // };
+export function ToRGBA (color) {
+    // 创建div元素并设置颜色
+    let div = document.createElement('div');
+    div.style.color = color;
+    document.body.appendChild(div);
+    // 返回计算后的颜色值
+    let cssColor = window.getComputedStyle(div).color;
+    // div元素移除
+    document.body.removeChild(div);
+    // 如果是RGB颜色，则转换成RGBA表示
+    let arrRGBA = cssColor.match(/\d+/g);
+    if (arrRGBA.length == 3) {
+        arrRGBA.push(1);
+    }
+    return arrRGBA.map(function (value) {
+        return value * 1;
+    });
+}
+// export function TransitionRGBA(from,to){
+//
+// }
