@@ -35,6 +35,11 @@ export default {
 </script>
 
 <style lang="less" scoped>
+  #app{
+    .el-main{
+      overflow: auto;
+    }
+  }
   #be{
     position: absolute;
     width: 100%;
