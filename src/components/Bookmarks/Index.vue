@@ -128,11 +128,13 @@
 <script>
 import axios from "axios";
 import {Message} from "element-ui";
+import Api from "@/ApiConfig/api";
 
 export default {
   name: "Index",
   data() {
     return {
+      api:"",
       addBookmarksLod: false,
       activeNames: ["1"],
       bookmarks: [],
@@ -153,7 +155,7 @@ export default {
         ]
       },
       bookmarkTitlesFormValidator: async (rule, value, callback) => {
-        await axios.get('https://www.biogdream.com:3000/connect/selIsBookmarkTitle', {
+        await axios.get(Api.url+Api.selIsBookmarkTitle, {
           params: {
             title: value
           }
@@ -190,7 +192,7 @@ export default {
       });
     },
     getBookmarks: async function () {
-      await axios.get('https://www.biogdream.com:3000/connect/aggregate')
+      await axios.get(Api.url+Api.aggregate)
           .then((res) => {
             console.log(res);
             this.bookmarks = res.data;
@@ -201,7 +203,7 @@ export default {
     },
     getBookmarkTitles: async function (queryString, cb) {
       console.log(queryString);
-      await axios.get('https://www.biogdream.com:3000/connect/selBookmarkTitles', {
+      await axios.get(Api.url+Api.selBookmarkTitles, {
         params: {
           title: queryString
         }
@@ -241,7 +243,7 @@ export default {
       )
     },
     setBookmarkTitles: async function () {
-      await axios.post('https://www.biogdream.com:3000/connect/addBookmarkTitles', this.bookmarkTitlesForm.titles)
+      await axios.post(Api.url+Api.addBookmarkTitles, this.bookmarkTitlesForm.titles)
           .then(res => {
             console.log(res);
             this.getBookmarks();
@@ -267,7 +269,7 @@ export default {
     },
     setBookmarks: async function () {
       this.addBookmarksLod = true;
-      await axios.post('https://www.biogdream.com:3000/connect/addBookmarks', this.bookmarksForm.addBookmarks)
+      await axios.post(Api.url+Api.addBookmarks, this.bookmarksForm.addBookmarks)
           .then(res => {
             console.log(res);
             this.getBookmarks();
@@ -302,7 +304,7 @@ export default {
           a++;
         }
       })
-      return a > i ? true : false;
+      return a > i;
     }
   },
   mounted() {

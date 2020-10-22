@@ -43,8 +43,34 @@
             width="200"
         >
           <template slot-scope="scope">
-            <el-button type="primary" icon="el-icon-edit" @click.prevent="editTableData(scope.row,scope.$index)" circle></el-button>
-            <el-button type="danger" icon="el-icon-delete" @click.prevent="delTableData(scope.row._id)" circle></el-button>
+            <el-button
+                v-if="!scope.row.edit"
+                type="primary"
+                icon="el-icon-edit"
+                @click.prevent="editTableData(scope.row,scope.$index)"
+                circle
+            />
+<!--            <el-button-->
+<!--                v-if="scope.row.edit"-->
+<!--                type="primary"-->
+<!--                icon="el-icon-check"-->
+<!--                @click.prevent="()=>this.tableData[scope.$index].edit=false"-->
+<!--                circle-->
+<!--            />-->
+            <el-button
+                v-if="!scope.row.edit"
+                type="danger"
+                icon="el-icon-delete"
+                @click.prevent="delTableData(scope.row._id)"
+                circle
+            />
+<!--            <el-button-->
+<!--                v-if="scope.row.edit"-->
+<!--                type="danger"-->
+<!--                icon="el-icon-close"-->
+<!--                @click.prevent="()=>this.tableData[scope.$index].edit=false"-->
+<!--                circle-->
+<!--            />-->
           </template>
         </el-table-column>
       </el-table>
