@@ -6,7 +6,8 @@ import {
     Form,FormItem,Table,
     TableColumn, Input, Autocomplete,
     Aside,Menu,MenuItem,MenuItemGroup,
-    Submenu,Tabs,TabPane
+    Submenu,Tabs,TabPane,Pagination,
+    Loading,Tooltip
 } from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 import 'element-ui/lib/theme-chalk/base.css';
@@ -36,3 +37,6 @@ Vue.use(Submenu);
 Vue.use(Tabs);
 Vue.use(TabPane);
 Vue.use(CollapseTransition.name,CollapseTransition);
+Vue.use(Pagination);
+Vue.use(Loading);
+Vue.use(Tooltip);
