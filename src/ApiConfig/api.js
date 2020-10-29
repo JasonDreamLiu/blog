@@ -4,7 +4,10 @@ const JslAPI = {
     aggregate:'/connect/aggregate',
     selBookmarkTitles:'/connect/selBookmarkTitles',
     addBookmarkTitles:'/connect/addBookmarkTitles',
-    addBookmarks:'/connect/addBookmarks'
+    addBookmarks:'/connect/addBookmarks',
+    aggregatePagination:'/connect/aggregatePagination',
+    updateBookmarkTypes:'/connect/updateBookmarkTypes',
+    delBookmarksTypes:'/connect/delBookmarksTypes'
 }
 export default JslAPI
 // export default class JslAPI {
