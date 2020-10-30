@@ -18,6 +18,8 @@
     "iconv-lite": "^0.6.2",
     "less": "^3.12.2",
     "less-loader": "^7.0.2",
+    "socket.io": "^2.3.0",
+    "socket.io-client": "^2.3.1",
     "vue": "^2.6.11",
     "vue-router": "^3.2.0",
     "vuex": "^3.4.0"
