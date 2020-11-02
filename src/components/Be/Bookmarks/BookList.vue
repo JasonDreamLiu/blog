@@ -116,6 +116,7 @@
 import axios from "axios";
 import Api from "@/ApiConfig/api";
 import {Message} from "element-ui";
+import io from "socket.io-client";
 
 export default {
   name: "BookList",
@@ -184,6 +185,7 @@ export default {
                   message: '成功删除' + data.result.n + '条数据！',
                   type: 'success'
                 })
+                this.$store.state.io.emit('Refresh',true);
                 this.getTableData(this.tableDataPage.pageIndex);
               } else if (res.result.ok && res.result.n < 1) {
                 Message({
@@ -220,6 +222,7 @@ export default {
                     message: '修改成功！',
                     type: 'success'
                   })
+                  this.$store.state.io.emit('Refresh',true);
                   this.getTableData(this.tableDataPage.pageIndex);
                 } else if (res.result.ok && res.result.nModified < 1) {
                   Message({
@@ -273,6 +276,14 @@ export default {
   },
   mounted() {
     this.getTableData(this.tableDataPage.pageIndex);
+    if (!this.$store.state.io){
+      this.$store.commit('setIo',io('http://172.26.40.247:3000'));
+    }
+    this.$store.state.io.on('Refresh',success=>{
+      if (success){
+        this.getTableData(this.tableDataPage.pageIndex);
+      }
+    })
   }
 }
 </script>

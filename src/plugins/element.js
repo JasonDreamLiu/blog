@@ -7,7 +7,8 @@ import {
     TableColumn, Input, Autocomplete,
     Aside,Menu,MenuItem,MenuItemGroup,
     Submenu,Tabs,TabPane,Pagination,
-    Loading,Tooltip,Popconfirm
+    Loading,Tooltip,Popconfirm,
+    Select,Option
 } from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 import 'element-ui/lib/theme-chalk/base.css';
@@ -41,3 +42,5 @@ Vue.use(Pagination);
 Vue.use(Loading);
 Vue.use(Tooltip);
 Vue.use(Popconfirm);
+Vue.use(Select);
+Vue.use(Option);

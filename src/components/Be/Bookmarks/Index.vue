@@ -31,7 +31,7 @@ export default {
 
 <style lang="less" scoped>
 .el-tabs {
-  height: calc(100% - 20px);
+  min-height: calc(100% - 20px);
 
   .cell span {
     overflow: hidden;

@@ -1,6 +1,24 @@
 <template>
   <div>
-    <div class="console">
+    <div class="tool">
+      <div class="tool-grid-col">
+        <div style="margin-bottom: 10px; color: #3a8ee6">标签删除</div>
+        <el-select
+            v-model="delTitles"
+            multiple
+            placeholder="请选择需要删除的Title"
+        >
+          <el-option
+              v-for="item in bookmarkTitles"
+              :key="item._id"
+              :label="item.value"
+              :value="item._id"
+          />
+        </el-select>
+        <el-button style="margin-top: 10px" @click="delBookmarkTitle">删除</el-button>
+      </div>
+    </div>
+    <div class="console" style="clear:both">
       <el-form ref="bookmarkTitlesForm" :model="bookmarkTitlesForm">
         <el-form-item
             v-for="(item,index) in bookmarkTitlesForm.titles"
@@ -13,7 +31,12 @@
                 ]"
         >
           <el-input v-model="item.title"></el-input>
-          <el-button v-if="bookmarkTitlesForm.titles.length>1" @click.prevent="removeBookmarkTitles(item)">删除
+          <el-button
+              v-if="bookmarkTitlesForm.titles.length>1"
+              class="buttonTopMG"
+              @click.prevent="removeBookmarkTitles(item)"
+          >
+            删除
           </el-button>
         </el-form-item>
         <el-form-item>
@@ -43,7 +66,7 @@
               <el-form-item
                   :prop="'addBookmarks.'+scope.$index+'.title'"
                   :rules="[
-                  {required: true, message: '书签组名不能为空', trigger: 'change'}
+                  {required: true, message: '书签组名不能为空', trigger: 'blur'}
                 ]"
               >
                 <el-autocomplete
@@ -104,8 +127,15 @@
             </template>
           </el-table-column>
         </el-table>
-        <el-form-item>
-          <el-button :loading="addBookmarksLod" type="primary" @click="submitForm('bookmarksForm',setBookmarks)">提交
+        <el-form-item
+            class="buttonTopMG"
+        >
+          <el-button
+              :loading="addBookmarksLod"
+              type="primary"
+              @click="submitForm('bookmarksForm',setBookmarks)"
+          >
+            提交
           </el-button>
         </el-form-item>
       </el-form>
@@ -124,6 +154,8 @@ export default {
   data() {
     return {
       addBookmarksLod: false,
+      delTitles: [],
+      bookmarkTitles: [],
       bookmarkTitlesForm: {
         titles: [
           {
@@ -141,7 +173,7 @@ export default {
         ]
       },
       bookmarkTitlesFormValidator: async (rule, value, callback) => {
-        await axios.get(Api.url+Api.selIsBookmarkTitle, {
+        await axios.get(Api.url + Api.selIsBookmarkTitle, {
           params: {
             title: value
           }
@@ -162,7 +194,7 @@ export default {
       },
     }
   },
-  methods:{
+  methods: {
     submitForm: function (formName, fn) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
@@ -191,16 +223,55 @@ export default {
     },
     getBookmarkTitles: async function (queryString, cb) {
       console.log(queryString);
-      await axios.get(Api.url+Api.selBookmarkTitles, {
+      await axios.get(Api.url + Api.selBookmarkTitles, {
         params: {
           title: queryString
         }
       }).then(res => {
         console.log(res);
-        cb(res.data);
+        if (cb) {
+          cb(res.data);
+        } else {
+          this.bookmarkTitles = res.data;
+        }
       }).catch(err => {
         console.log(err);
       })
+    },
+    delBookmarkTitle: async function () {
+      console.log(this.delTitles);
+      await axios.post(Api.url + Api.delBookmarkTitle, this.delTitles,)
+          .then(res => {
+            console.log(res);
+            if (res.statusText === "OK") {
+              const data = res.data;
+              if (data.result.ok && data.result.n > 0) {
+                Message({
+                  message: '成功删除' + data.result.n + '条数据！删除书签：'+data.typeInt+'条',
+                  type: 'success'
+                })
+                this.$store.state.io.emit('Refresh', true);
+                this.getBookmarkTitles("");
+                this.delTitles = [];
+              } else if (res.result.ok && res.result.n < 1) {
+                Message({
+                  message: '删除失败，意外错误！：请联系管理员',
+                  type: 'error'
+                })
+              } else {
+                Message({
+                  message: '删除失败，参数可能有误！：请联系管理员',
+                  type: 'error'
+                })
+              }
+            }
+          })
+          .catch(err => {
+            Message({
+              message: '系统错误：' + err,
+              type: 'error'
+            })
+          })
     },
     addBookmarks: function () {
       this.bookmarksForm.addBookmarks.push(
@@ -218,7 +289,7 @@ export default {
       }
     },
     setBookmarkTitles: async function () {
-      await axios.post(Api.url+Api.addBookmarkTitles, this.bookmarkTitlesForm.titles)
+      await axios.post(Api.url + Api.addBookmarkTitles, this.bookmarkTitlesForm.titles)
           .then(res => {
             console.log(res);
             if (res.data.result.success) {
@@ -226,6 +297,12 @@ export default {
                 message: '添加成功',
                 type: 'success'
               });
+              this.$store.state.io.emit('Refresh', true);
+              this.bookmarkTitlesForm.titles = [
+                {
+                  title: ""
+                }
+              ];
             } else {
               Message({
                 message: '添加失败',
@@ -243,7 +320,7 @@ export default {
     },
     setBookmarks: async function () {
       this.addBookmarksLod = true;
-      await axios.post(Api.url+Api.addBookmarks, this.bookmarksForm.addBookmarks)
+      await axios.post(Api.url + Api.addBookmarks, this.bookmarksForm.addBookmarks)
           .then(res => {
             console.log(res);
             if (res.data.result.success) {
@@ -251,7 +328,14 @@ export default {
                 message: '添加成功',
                 type: 'success'
               });
-              this.$store.state.io.emit('Refresh',true);
+              this.$store.state.io.emit('Refresh', true);
+              this.bookmarksForm.addBookmarks = [
+                {
+                  title: "",
+                  name: "",
+                  url: ""
+                }
+              ]
             } else {
               Message({
                 message: '添加失败',
@@ -282,13 +366,35 @@ export default {
     }
   },
   mounted() {
-    if (!this.$store.state.io){
-      this.$store.commit('setIo',io('http://172.26.40.247:3000'));
+    if (!this.$store.state.io) {
+      this.$store.commit('setIo', io('http://172.26.40.247:3000'));
     }
+    this.getBookmarkTitles("");
+    this.$store.state.io.on('Refresh',success=>{
+      if (success){
+        this.getBookmarkTitles("");
+      }
+    })
   }
 }
 </script>
 
-<style scoped>
+<style lang="less" scoped>
+.buttonTopMG {
+  margin-top: 22px;
+}
 
+.tool {
+  column-count: 4;
+  column-gap: 30px;
+  margin-bottom: 20px;
+  .tool-grid-col {
+    break-inside: avoid;
+    min-height: 20px;
+    border: 1px solid #3a8ee6;
+    border-radius: 10px;
+    //background: #8cc5ff;
+    padding: 10px;
+  }
+}
 </style>

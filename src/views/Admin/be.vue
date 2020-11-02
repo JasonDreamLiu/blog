@@ -57,11 +57,13 @@ export default {
           }
           height: 100%;
           float: left;
+          box-shadow: 5px 0 10px rgba(0.1,0.1,0.1,0.25);
         }
         .isCollapse{
           padding: 5px;
           font-size: 25px;
           margin-left: 5px;
+          z-index: 100;
         }
       }
     }

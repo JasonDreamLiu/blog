@@ -7,7 +7,8 @@ const JslAPI = {
     addBookmarks:'/connect/addBookmarks',
     aggregatePagination:'/connect/aggregatePagination',
     updateBookmarkTypes:'/connect/updateBookmarkTypes',
-    delBookmarksTypes:'/connect/delBookmarksTypes'
+    delBookmarksTypes:'/connect/delBookmarksTypes',
+    delBookmarkTitle:'/connect/delBookmarkTitle'
 }
 export default JslAPI
 // export default class JslAPI {
