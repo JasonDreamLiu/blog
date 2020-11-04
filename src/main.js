@@ -5,7 +5,7 @@ import store from './store'
 import './plugins/element.js'
 
 Vue.config.productionTip = false
-
+console.log(window.location.protocol);
 new Vue({
   router,
   store,

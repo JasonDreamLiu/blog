@@ -1,5 +1,9 @@
 const JslAPI = {
-    url:'http://127.0.0.1:3000',
+    url:window.location.protocol+'//www.biogdream.com/api',
+    ws:window.location.protocol+'//www.biogdream.com',
+    // url:'http://127.0.0.1:3000/api',
+    // ws:'http://127.0.0.1:3000',
+    wsPath:'/api/socket.io',
     selIsBookmarkTitle:'/connect/selIsBookmarkTitle',
     aggregate:'/connect/aggregate',
     selBookmarkTitles:'/connect/selBookmarkTitles',

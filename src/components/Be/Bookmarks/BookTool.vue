@@ -367,7 +367,7 @@ export default {
   },
   mounted() {
     if (!this.$store.state.io) {
-      this.$store.commit('setIo', io('http://172.26.40.247:3000'));
+      this.$store.commit('setIo',io(Api.ws,{path:Api.wsPath}));
     }
     this.getBookmarkTitles("");
     this.$store.state.io.on('Refresh',success=>{
